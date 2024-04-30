@@ -30,3 +30,9 @@ function generateCrossSVG() {
         </svg>
     `;
 }
+
+function generateButtonHTML() {
+    return /*html*/`
+        <button onclick="restartGame()">Spiel neu starten</button>
+    `;
+}
