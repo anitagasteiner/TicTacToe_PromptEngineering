@@ -1,5 +1,6 @@
 function init() {
     render();
+    showPlayers();
 }
 
 function render() {
@@ -16,7 +17,7 @@ function render() {
             } else if (symbol === 'cross') {
                 symbol = generateCrossSVG();
             }
-            table += `<td onclick="handleClick(${index})">${symbol}</td>`;
+            table += `<td onclick="handleClick(${index})" class="hover">${symbol}</td>`;
         }
         table += '</tr>';
     }
@@ -25,12 +26,35 @@ function render() {
     content.innerHTML = table;
 }
 
+function showPlayers() {
+    let currentPlayerCross = document.getElementById('currentPlayerCross');
+    let currentPlayerCircle = document. getElementById('currentPlayerCircle');
+    currentPlayerCross.innerHTML = '';
+    currentPlayerCircle.innerHTML = '';
+    currentPlayerCross.innerHTML = generateCrossSVG();
+    currentPlayerCircle.innerHTML = generateCircleSVG();
+    highlightCurrentPlayer(currentPlayerCross, currentPlayerCircle);
+}
+
+function highlightCurrentPlayer(currentPlayerCross, currentPlayerCircle) {
+    if (currentPlayer === 'cross') {
+        currentPlayerCross.classList.add('highlighted');
+        currentPlayerCircle.classList.remove('highlighted');
+    } else {
+        currentPlayerCross.classList.remove('highlighted');
+        currentPlayerCircle.classList.add('highlighted');
+    }
+}
+
 function handleClick(index) {
     if (!fields[index]) {
         fields[index] = currentPlayer;
-        let symbol = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG(); // ternärer Operator; Kurzschreibweise für ein if-Statement
-        document.getElementsByTagName('td')[index].innerHTML = symbol;
-        currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';
-        document.getElementsByTagName('td')[index].onclick = null;
+        let currentTd = document.getElementsByTagName('td')[index];
+        let symbol = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG(); // ternärer Operator; Kurzschreibweise für ein if-Statement        
+        currentTd.innerHTML = symbol;
+        currentTd.onclick = null;
+        currentTd.classList.remove('hover');
+        currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';        
     }
+    showPlayers();
 }

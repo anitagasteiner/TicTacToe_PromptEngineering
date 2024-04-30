@@ -8,7 +8,11 @@ body {
 @font-face {
     font-family: Open Sans;
     src: local(''), url(fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf);
-  }
+}
+
+h1 {
+    font-size: 45px;
+}
 
 table {
     border-collapse: collapse;
@@ -22,7 +26,7 @@ td {
     border: 5px solid white;
 }
 
-td:hover {
+.hover:hover {
     background-color: rgba(255,255,255,0.3);
     cursor: pointer;
 }
@@ -43,9 +47,21 @@ tr:last-child td {
     border-bottom: 0;
 }
 
-/* svg {
-    display: none;
-} */
+#players {
+    margin: 30px 0 60px;
+    display: flex;
+    gap: 20px;
+}
+
+#currentPlayerCross, #currentPlayerCircle {
+    padding: 10px;
+}
+
+.highlighted {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}
+
 
 #mainContainer {
     height: 100vh;

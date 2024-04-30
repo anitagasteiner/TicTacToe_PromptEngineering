@@ -10,4 +10,4 @@ let fields = [
     null, // 8
 ];
 
-let currentPlayer = 'circle';
+let currentPlayer = 'cross';
