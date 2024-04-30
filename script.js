@@ -1,6 +1,7 @@
 function init() {
     render();
     showPlayers();
+    highlightCurrentPlayer();
 }
 
 function render() {
@@ -33,16 +34,31 @@ function showPlayers() {
     currentPlayerCircle.innerHTML = '';
     currentPlayerCross.innerHTML = generateCrossSVG();
     currentPlayerCircle.innerHTML = generateCircleSVG();
-    highlightCurrentPlayer(currentPlayerCross, currentPlayerCircle);
 }
 
-function highlightCurrentPlayer(currentPlayerCross, currentPlayerCircle) {
-    if (currentPlayer === 'cross') {
-        currentPlayerCross.classList.add('highlighted');
+function highlightCurrentPlayer() {
+    let currentPlayerCross = document.getElementById('currentPlayerCross');
+    let currentPlayerCircle = document. getElementById('currentPlayerCircle');
+    if (isThereAWinner == '') {        
+        if (currentPlayer === 'cross') {
+            currentPlayerCross.classList.add('highlighted');
+            currentPlayerCircle.classList.remove('highlighted');
+        } else {
+            currentPlayerCross.classList.remove('highlighted');
+            currentPlayerCircle.classList.add('highlighted');
+        }
+    }
+}
+
+function highlightWinner(winner) {
+    let currentPlayerCross = document.getElementById('currentPlayerCross');
+    let currentPlayerCircle = document. getElementById('currentPlayerCircle');    
+    if (winner === 'cross') {
+        currentPlayerCross.classList.add('highlightedWinner');
         currentPlayerCircle.classList.remove('highlighted');
     } else {
+        currentPlayerCircle.classList.add('highlightedWinner');
         currentPlayerCross.classList.remove('highlighted');
-        currentPlayerCircle.classList.add('highlighted');
     }
 }
 
@@ -56,5 +72,34 @@ function handleClick(index) {
         currentTd.classList.remove('hover');
         currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';        
     }
-    showPlayers();
+    checkWinner();
+}
+
+function checkWinner() {
+    // Durchlaufen aller Gewinnkombinationen
+    for (let combo of winningCombos) {
+        const [a, b, c] = combo;
+        // Überprüfen, ob die Felder in der aktuellen Kombination alle vom selben Spieler belegt sind
+        if (fields[a] && fields[a] === fields[b] && fields[a] === fields[c]) {
+            let winner = fields[a];
+            highlightWinner(winner);
+            isThereAWinner = 1;
+            stopGame();
+            let winningCells = [a, b, c];
+            for (let cellIndex of winningCells) {
+                let cell = document.getElementsByTagName('td')[cellIndex];
+                cell.style.background = 'rgba(236, 122, 8, 0.6)';
+            }
+            break;
+        }        
+    }
+    highlightCurrentPlayer();    
+}
+
+function stopGame() {
+    let allTd = document.getElementsByTagName('td');
+    for (let i = 0; i < allTd.length; i++) {
+        allTd[i].classList.remove('hover');
+        allTd[i].onclick = null;
+    }
 }

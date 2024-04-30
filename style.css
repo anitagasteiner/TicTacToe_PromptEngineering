@@ -62,6 +62,10 @@ tr:last-child td {
     border-radius: 10px;
 }
 
+.highlightedWinner {
+    background-color: rgba(236, 122, 8, 0.6);
+    border-radius: 10px;
+}
 
 #mainContainer {
     height: 100vh;
