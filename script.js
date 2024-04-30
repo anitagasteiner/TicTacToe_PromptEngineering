@@ -16,11 +16,21 @@ function render() {
             } else if (symbol === 'cross') {
                 symbol = generateCrossSVG();
             }
-            table += `<td>${symbol}</td>`;
+            table += `<td onclick="handleClick(${index})">${symbol}</td>`;
         }
         table += '</tr>';
     }
 
     table += '</table>';
     content.innerHTML = table;
+}
+
+function handleClick(index) {
+    if (!fields[index]) {
+        fields[index] = currentPlayer;
+        let symbol = currentPlayer === 'circle' ? generateCircleSVG() : generateCrossSVG(); // ternärer Operator; Kurzschreibweise für ein if-Statement
+        document.getElementsByTagName('td')[index].innerHTML = symbol;
+        currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';
+        document.getElementsByTagName('td')[index].onclick = null;
+    }
 }
