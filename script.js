@@ -12,9 +12,9 @@ function render() {
             let index = i * 3 + j;
             let symbol = fields[index] ? fields[index] : ''; // Der Ausdruck vor dem ? wird ausgewertet. Ist er true, wird der Wert zwischen dem ? und dem : als Wert für die Variable 'symbol' verwendet. Ist er false, wird der Wert nach dem : als Wert für die Variable 'symbol' verwendet, also ein leerer String.
             if (symbol === 'circle') {
-                symbol = 'o';
+                symbol = generateCircleSVG();
             } else if (symbol === 'cross') {
-                symbol = 'x';
+                symbol = generateCrossSVG();
             }
             table += `<td>${symbol}</td>`;
         }
